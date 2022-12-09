@@ -4,29 +4,32 @@
 <h3 class="cyan-text text-darken-2 center-align">Tasks</h3>
 
 <div class="row">
-    <div class="col s12 center-align">
-        <a href="{{ url_for('add_task') }}" class="btn-large cyan darken-1">
-            Add Task <i class="fa-solid fa-folder-plus right"></i>
-        </a>
-    </div>
+  <div class="col s12 center-align">
+    <a href="{{ url_for('add_task') }}" class="btn-large cyan darken-1">
+      Add Task <i class="fa-solid fa-folder-plus right"></i>
+    </a>
+  </div>
 </div>
 
 <ul class="collapsible">
-    {% for task in tasks|sort(attribute="due_date") %}
-    <li>
-      <div class="collapsible-header white-text cyan darken-1">
-        <i class="fa fa-caret-down"></i>
-        <strong>{{ task.task_name }}</strong> : {{ task.due_date.strftime("%d %B %Y") }}
-        {% if task.is_urgent == True %}
-            <i class="fas fa-exclamation-circle cyan-text text-darken-2"></i>
-        {% endif %}    
+  {% for task in tasks|sort(attribute="due_date") %}
+  <li>
+    <div class="collapsible-header white-text cyan darken-1">
+      <i class="fa fa-caret-down"></i>
+      <strong>{{ task.task_name }}</strong> : {{ task.due_date.strftime("%d %B %Y") }}
+      {% if task.is_urgent == True %}
+      <i class="fas fa-exclamation-circle cyan-text text-darken-2"></i>
+      {% endif %}
     </div>
-      <div class="collapsible-body">
-        <strong>{{ task.category }}</strong>
-        <p>{{ task.task_description }}</p>
-      </div>
-    </li>
-    {% endfor %}
+    <div class="collapsible-body">
+      <strong>{{ task.category }}</strong>
+      <p>{{ task.task_description }}</p>
+      <p>
+        <a href="{{ url_for('edit_task', task_id=task.id) }}" class="btn teal accent-3">Edit</a>
+      </p>
+    </div>
+  </li>
+  {% endfor %}
 </ul>
 
 {% endblock %}
